@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint backend",
     "server-dev": "./node_modules/.bin/webpack --config webpack.backend.config.babel.js --watch --hot",
     "start": "DEBUG=moviebox nodemon ./dist/backend/server.js --watch ./dist/backend/"
   },

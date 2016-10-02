@@ -5,7 +5,7 @@ const debug = require('debug')('moviebox');
 const api = express.Router(); // eslint-disable-line new-cap
 
 api.get('/', (req, res) => {
-  res.json({ version, test: 29 });
+  res.json({ version, test: 30 });
 });
 
 const app = express();
@@ -17,3 +17,5 @@ const server = app.listen(8000, () => {
 
   debug(`App listening at http://${host}:${port}`);
 });
+
+export default app;

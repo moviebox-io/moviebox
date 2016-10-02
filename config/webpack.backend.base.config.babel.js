@@ -1,10 +1,10 @@
-import webpack from 'webpack';
 import path from 'path';
 import fs from 'fs';
+import config from './config';
 
 // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
 const nodeModules = {};
-fs.readdirSync('node_modules')
+fs.readdirSync(config.nodeModules)
   .filter((x) => {
     return ['.bin'].indexOf(x) === -1;
   })
@@ -12,14 +12,17 @@ fs.readdirSync('node_modules')
     nodeModules[mod] = `commonjs ${mod}`;
   });
 
-module.exports = {
+export default {
   entry: [
-    './backend/server.js',
+    `${config.backend}/server.js`,
   ],
   target: 'node',
   output: {
-    path: path.join(__dirname, '/dist/backend/'),
+    path: path.join(config.root, '/dist/backend/'),
     filename: 'server.js',
+  },
+  resolve: {
+    alias: config.alias,
   },
   externals: nodeModules,
   module: {

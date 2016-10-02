@@ -2,14 +2,15 @@
   "name": "moviebox",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "lint": "eslint backend",
-    "test": "npm run test:be:unit",
-    "server:dev": "./node_modules/.bin/webpack --config ./config/webpack.backend.config.babel.js --watch --hot",
-    "start": "DEBUG=moviebox nodemon ./dist/backend/server.js --watch ./dist/backend/",
-    "test:be:unit": "./node_modules/.bin/mocha --compilers js:babel-core/register \"test/unit/backend/**/*.spec.js\"",
-    "test:be:cover": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel-core/register \"test/unit/backend/**/*.spec.js\""
+    "lint": "eslint backend config test",
+    "test": "npm run test:be:cover",
+    "test:unit": "npm run test:be:unit",
+    "test:cover": "npm run test:be:cover",
+    "server:dev": "webpack --config config/webpack.backend.base.config.babel.js --watch --hot",
+    "start": "DEBUG=moviebox nodemon dist/backend/server.js --watch dist/backend/",
+    "test:be:unit": "babel-node ./node_modules/.bin/_mocha test/unit/backend/**/*.spec.js",
+    "test:be:cover": "babel-node ./node_modules/.bin/babel-istanbul cover ./node_modules/.bin/_mocha -- test/unit/backend/**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "express": "^4.14.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.16.0",
     "babel-eslint": "^6.1.2",
     "babel-istanbul": "^0.11.0",
     "babel-loader": "^6.2.5",
@@ -34,6 +36,7 @@
     "babel-register": "^6.14.0",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "codecov": "^1.0.1",
     "eslint": "^3.5.0",
     "eslint-loader": "^1.5.0",
     "istanbul": "^0.4.5",

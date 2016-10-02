@@ -12,7 +12,7 @@
 
 ```
 tab1
-`npm run server-dev`
+`npm run server:dev`
 
 tab2
 `npm start`

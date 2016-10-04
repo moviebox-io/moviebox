@@ -4,5 +4,5 @@ import Greeting from './Greeting';
 
 ReactDOM.render(
   <Greeting name="World?" />,
-  document.body
+  document.getElementById('app')
 );

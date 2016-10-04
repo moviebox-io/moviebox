@@ -5,6 +5,9 @@
     "node": true,                         // Node.js global variables and Node.js-specific rules
     "browser": true
   },
+  "plugins": [
+    "react"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -277,6 +280,11 @@
       "unnecessary": true,
       "numbers": false
     }],
-    "wrap-regex": 0                              // http://eslint.org/docs/rules/wrap-regex
+    "wrap-regex": 0,                      // http://eslint.org/docs/rules/wrap-regex
+
+    //REACT
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/react-in-jsx-scope" :2
   }
 }

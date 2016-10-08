@@ -4,10 +4,10 @@
   "description": "",
   "scripts": {
     "lint": "eslint backend config test",
-    "test": "npm run test:be:cover",
+    "test": "npm run test:cover",
     "test:unit": "npm run test:be:unit",
     "test:cover": "npm run test:be:cover",
-    "server:dev": "webpack --config config/webpack.backend.base.config.babel.js --watch --hot",
+    "server:dev": "webpack --config config/webpack.backend.dev.config.babel.js --watch --hot",
     "server:fe:dev": "webpack-dev-server --config ./config/webpack.frontend.base.config.babel.js --watch --hot --inline --display-error-details",
     "start": "DEBUG=moviebox nodemon dist/backend/server.js --watch dist/backend/",
     "test:be:unit": "babel-node ./node_modules/.bin/_mocha test/unit/backend/**/*.spec.js",
@@ -26,6 +26,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "express": "^4.14.0",
+    "mongoose": "^4.6.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },
@@ -38,6 +39,7 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.14.0",
+    "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "codecov": "^1.0.1",
@@ -51,6 +53,7 @@
     "mocha": "^3.1.0",
     "mocha-webpack": "^0.6.0",
     "nodemon": "^1.10.2",
+    "source-map-support": "^0.4.3",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1",
     "webpack-merge": "^0.14.1"

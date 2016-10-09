@@ -16,13 +16,25 @@ describe('Server', () => {
   });
 
   describe('/api', () => {
-    it('it should GET the api', (done) => {
+    it('should GET the root', (done) => {
       chai.request(server)
-        .get('/api')
+        .get('/')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('version');
+          done();
+        });
+    });
+  });
+
+  describe('/api/movies', () => {
+    it('should GET all the movies', (done) => {
+      chai.request(server)
+        .get('/api/movies')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array');
           done();
         });
     });

@@ -9,7 +9,7 @@ const getVisibleMovies = (movies, filter) => {
 };
 
 const mapStateToProps = (state) => ({
-  movies: getVisibleMovies(state.movies, state.selectedGenre),
+  movies: getVisibleMovies(state.movies, state.selectGenre),
 });
 
 const FilteredMovieList = connect(

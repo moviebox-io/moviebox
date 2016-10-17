@@ -5,9 +5,9 @@ import config from './config';
 // http://jlongster.com/Backend-Apps-with-Webpack--Part-I
 const nodeModules = {};
 fs.readdirSync(config.nodeModules)
-  .filter((x) => {
-    return ['.bin'].indexOf(x) === -1;
-  })
+  .filter((x) => (
+     ['.bin'].indexOf(x) === -1
+  ))
   .forEach((mod) => {
     nodeModules[mod] = `commonjs ${mod}`;
   });

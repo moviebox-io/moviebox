@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lint": "eslint backend config test",
+    "lint": "eslint backend config test frontend",
     "test": "npm run test:cover",
     "test:unit": "npm run test:be:unit",
     "test:cover": "npm run test:be:cover",

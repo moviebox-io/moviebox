@@ -1,19 +1,35 @@
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MovieList from '../components/MovieList';
+import SelectGenre from '../components/SelectGenre';
+import { getVisibleMovies } from '../reducers';
 
-const getVisibleMovies = (movies, filter) => {
-  if (filter) {
-    return movies.filter(t => t.genre === filter);
+class FilteredMovieList extends Component {
+  static propTypes = {
+    getVisibleMovies: PropTypes.func.isRequired,
   }
-  return movies;
-};
+
+  handleChange(e) {
+    this.setState({ text: e.target.value });
+  }
+
+  render() {
+    const { selectGenre, movies } = this.props;
+    return (
+      <div>
+        <SelectGenre value={selectGenre}
+                 onChange={this.handleChange} />
+        <MovieList movies={movies} />
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = (state) => ({
   movies: getVisibleMovies(state.movies, state.selectGenre),
+  selectGenre: state.selectGenre,
 });
 
-const FilteredMovieList = connect(
+export default connect(
   mapStateToProps,
-)(MovieList);
-
-export default FilteredMovieList;
+)(FilteredMovieList);

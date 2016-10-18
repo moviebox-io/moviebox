@@ -5,6 +5,7 @@ const backend = path.join(__dirname, '../backend');
 const nodeModules = path.join(__dirname, '../node_modules');
 const frontendSource = path.join(__dirname, '../frontend/');
 const frontendDist = path.join(__dirname, '../dist/frontend/');
+const publicFiles = path.join(__dirname, '../public/');
 
 export default {
   root,
@@ -13,8 +14,8 @@ export default {
   frontend: {
     src: frontendSource,
     dist: frontendDist,
-    index: path.join(frontendSource, 'index.html'),
-    appRoot: path.join(frontendSource, 'app'),
+    index: path.join(publicFiles, 'index.html'),
+    appRoot: path.join(frontendSource, 'index'),
   },
   alias: {
     '@backend': backend,

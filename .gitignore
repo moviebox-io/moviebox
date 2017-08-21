@@ -1,4 +1,8 @@
-node_modules
-dist
+.DS_Store
+node_modules/
+dist/
 npm-debug.log
-coverage
+yarn-error.log
+frontend/test/unit/coverage
+db/
+config.secure.js

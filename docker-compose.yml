@@ -1,0 +1,27 @@
+version: '2'
+services:
+  web:
+    build: frontend
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./frontend/src:/opt/app/src
+    environment:
+      API_HOSTNAME: 'backend'
+  backend:
+    build: backend
+    volumes:
+      - ./backend/src:/opt/server/src
+    ports:
+      - '3000:3000'
+    links:
+      - database
+    environment:
+      MONGODB_HOSTNAME: 'database'
+  database:
+    image: mongo
+    volumes:
+      - ./db:/data/db
+    ports:
+      - '27017:27017'
+    command: '--smallfiles'

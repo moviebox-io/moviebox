@@ -13,7 +13,7 @@
     <div class="navbar-menu">
       <div class="navbar-item">
         <div class="control">
-          <input class="input is-medium" id="search" type="text" placeholder="Search...">
+          <input class="input is-medium" id="search" type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="search">
         </div>
       </div>
     </div>
@@ -39,10 +39,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// logo -> #be002c
+
 export default {
   data () {
     return {
+      searchQuery: ''
     }
   },
   computed: {
@@ -52,12 +53,23 @@ export default {
       imageUrl: 'getImageUrl'
     })
   },
+  watch: {
+    '$route': 'updateQuery'
+  },
   mounted () {
     window.addEventListener('load', () => {
       this.loadGapiAuth2()
     })
   },
   methods: {
+    search () {
+      if (this.searchQuery.length >= 3) {
+        this.$router.replace(`/search/${this.searchQuery}`)
+      }
+    },
+    updateQuery () {
+      this.searchQuery = this.$route.params.query
+    },
     onSignInSuccess (googleUser) {
       return this.$store.dispatch('login', { googleUser })
     },

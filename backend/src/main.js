@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import oauth2 from './libs/oauth2'
+import movies from './routes/movies'
 import { version } from '../package.json'
 import { sessionSecret } from './config.secure'
 
@@ -61,6 +62,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', oauth2)
+app.use('/movies', movies)
 
 app.use((err, req, res, next) => {
   console.error(chalk.red(err.stack))

@@ -1,27 +1,42 @@
 <template>
   <section class="section">
-    <h1 class="title">
-      Hello World
-    </h1>
-    <p class="subtitle">
-      My first website with <strong>Bulma</strong>!
-    </p>
-    <div class="columns is-multiline is-mobile">
-      <div class="column is-one-third" v-for="movie in movies" :item="movie" :key="movie.id">
-        <div class="box">
-          <article class="media">
-            <div class="media-left is-poster">
-              <figure class="image">
-                <img v-if="movie.poster_path" :src="movie.poster_path" alt="Image">
-                <span v-else class="icon is-large"><i class="fa fa-film" aria-hidden="true"></i></span>
-              </figure>
+    <div class="columns">
+      <div class="column box is-narrow">
+        <div class="content side-menu">
+          <p class="title">Categories</p>
+          <p class="subtitle">Or no categories?</p>
+          <div class="content">
+            Who knows...
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-multiline">
+          <div class="column is-11 is-offset-1" v-for="movie in movies" :item="movie" :key="movie.id">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img v-if="movie.poster_path" :src="movie.poster_path" alt="Image">
+                      <span v-else class="icon is-large"><i class="fa fa-film" aria-hidden="true"></i></span>
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-4">{{ movie.title }}</p>
+                    <p class="subtitle is-6"><small><i class="fa fa-star" aria-hidden="true"></i>{{ movie.vote_average }}</small></p>
+                  </div>
+                </div>
+
+                <div class="content">
+                  {{ movie.overview }}
+                </div>
+              </div>
+              <footer class="card-footer">
+                <a class="card-footer-item">Save</a>
+              </footer>
             </div>
-            <div class="media-content">
-              <strong>{{ movie.title }}</strong> <small><i class="fa fa-star" aria-hidden="true"></i>{{ movie.vote_average }}</small>
-              <br>
-              {{ movie.overview }}
-            </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>
@@ -75,5 +90,9 @@ export default {
 
 .is-poster {
   height: 100%;
+}
+
+.side-menu {
+  width: 200px;
 }
 </style>

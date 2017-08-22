@@ -4,7 +4,7 @@ export default {
   urls: {
     baseUrl: '/api',
     authGoogle () { return `${this.baseUrl}/auth/google` },
-    searchMovie (query) { return `${this.baseUrl}/movies/search/${query}` }
+    searchMovie (query) { return `${this.baseUrl}/movies/search?q=${query}` }
   },
 
   getTransactions () {

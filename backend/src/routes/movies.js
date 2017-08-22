@@ -28,8 +28,8 @@ api.post('/movies', (req, res) => {
   })
 })
 
-api.get('/search/:query', async (req, res) => {
-  const movie = await searchMovie({ query: req.params.query }).catch(err => {
+api.get('/search', async (req, res) => {
+  const movie = await searchMovie({ query: req.query.q }).catch(err => {
     res.status(500).send(err.message)
   })
   res.json(movie)

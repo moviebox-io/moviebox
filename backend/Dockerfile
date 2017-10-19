@@ -1,12 +1,17 @@
 FROM node:slim
-MAINTAINER David Picarra <daviddcp@gmail.com>
+LABEL maintainer="daviddcp@gmail.com"
 
 # Slim start up
 # Download and install yarn
-RUN mkdir -p /opt/yarn/ && \
+# bzip2 and libfontconfig are needed for phantomjs
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends bzip2 libfontconfig && \
+  mkdir -p /opt/yarn/ && \
   wget https://yarnpkg.com/latest.tar.gz && \
   tar -zxf latest.tar.gz -C /opt/yarn/ && \
-  rm latest.tar.gz
+  rm latest.tar.gz && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/apt/lists/*
 
 ENV PATH "$PATH:/opt/yarn/dist/bin"
 

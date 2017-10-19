@@ -2,6 +2,7 @@ version: '2'
 services:
   web:
     build: frontend
+    container_name: frontend
     ports:
       - '8080:8080'
     volumes:
@@ -10,6 +11,7 @@ services:
       API_HOSTNAME: 'backend'
   backend:
     build: backend
+    container_name: backend
     volumes:
       - ./backend/src:/opt/server/src
     ports:
@@ -20,6 +22,7 @@ services:
       MONGODB_HOSTNAME: 'database'
   database:
     image: mongo
+    container_name: mongo
     volumes:
       - ./db:/data/db
     ports:

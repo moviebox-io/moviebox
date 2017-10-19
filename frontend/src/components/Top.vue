@@ -23,7 +23,7 @@
       </div>
       <div v-if="loggedIn" class="user">
         <div class="navbar-item">
-          <router-link to="/settings" tag="span">
+          <router-link to="/about" tag="span">
             <i class="fa fa-cog fa-fw" aria-hidden="true"></i>
             <div class="name">{{ name }}</div>
             <img :src="imageUrl" class="user-avatar" width="32" height="32"/>

@@ -1,5 +1,5 @@
 FROM node:slim
-MAINTAINER David Picarra <daviddcp@gmail.com>
+LABEL maintainer="daviddcp@gmail.com"
 
 # Slim start up
 # Download and install yarn

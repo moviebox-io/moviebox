@@ -45,10 +45,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import api from '../api'
+import api from '@/api'
 
 export default {
-  name: 'search',
+  name: 'home',
   data () {
     return {
       loading: false,

@@ -1,38 +1,34 @@
 import express from 'express'
-import Movie from '../model/movie'
+import mongoose from 'mongoose'
 import { searchMovie } from '../libs/tmdb'
 
-const api = express.Router() // eslint-disable-line new-cap
+const api = express.Router()
+const Movie = mongoose.model('Movie')
 
 api.get('/', (req, res) => {
   Movie.find((err, movies) => {
-    if (err) res.send(err)
+    if (err) throw err
     res.json(movies)
-    return true
   })
 })
 
 api.get('/search', async (req, res) => {
   if (req.query.q) {
-    const movie = await searchMovie({ query: req.query.q }).catch(err => {
-      res.status(500).send(err.message)
-    })
-    res.json(movie)
-  } else {
-    Movie.findById(req.query.id, (err, movie) => {
-      if (err) res.send(err)
-      res.json(movie)
-    })
+    const movies = await searchMovie({ query: req.query.q })
+    for (let result of movies.results) {
+      let movie = { tmdb_id: result.id }
+      const fields = ['poster_path', 'overview', 'release_date', 'genre_ids', 'title']
+      fields.forEach(field => { movie[field] = result[field] })
+      const savedMovie = await Movie.save(movie)
+      result._id = savedMovie._id
+    }
+    res.json(movies)
   }
 })
 
-api.post('/', (req, res) => {
-  const movie = new Movie()
-  movie.name = req.body.name
-  movie.save((err) => {
-    if (err) res.send(err)
-    res.json({ message: 'Movie created!' })
-  })
+api.get('/:id', async (req, res) => {
+  const movie = await Movie.load(req.params.id)
+  res.json(movie)
 })
 
 export default api

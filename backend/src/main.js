@@ -8,10 +8,16 @@ import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import oauth2 from './libs/oauth2'
-import movies from './routes/movies'
-import library from './routes/library'
 import { version } from '../package.json'
 import { sessionSecret } from './config.secure'
+import fs from 'fs'
+import { join } from 'path'
+
+// Bootstrap models
+const models = join(__dirname, './models')
+fs.readdirSync(models)
+  .filter(file => ~file.search(/^[^.].*\.js$/))
+  .forEach(file => require(join(models, file)))
 
 const app = express()
 
@@ -63,8 +69,16 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', oauth2)
-app.use('/movies', movies)
-app.use('/library', library)
+
+// Bootstrap routes
+const routes = join(__dirname, './routes')
+fs.readdirSync(routes)
+  .filter(file => ~file.search(/^[^.].*\.js$/))
+  .forEach(file => {
+    const loaded = require(join(routes, file)).default
+    const name = file.split('.')[0]
+    app.use(`/${name}`, loaded)
+  })
 
 app.use((err, req, res, next) => {
   console.error(chalk.red(err.stack))

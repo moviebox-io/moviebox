@@ -23,4 +23,7 @@ $primary: #be002c;
 @import '~bulma';
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
+a {
+  color: $primary;
+}
 </style>

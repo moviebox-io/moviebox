@@ -2,7 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import { googleClientId } from '../config.secure'
 import GoogleTokenStrategy from 'passport-google-id-token'
-import User from '../model/user'
+import User from '../models/user'
 
 const router = express.Router() // eslint-disable-line new-cap
 

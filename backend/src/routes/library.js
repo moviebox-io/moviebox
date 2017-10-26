@@ -1,37 +1,28 @@
 import express from 'express'
-import User from '../model/user'
+import mongoose from 'mongoose'
 import { authRequired } from '../libs/oauth2'
 
-const api = express.Router() // eslint-disable-line new-cap
-
-const getCurrentUserUser = async (req, res) => {
-  return User.findOne({_id: req.user.id}, (err, user) => {
-    if (err) res.send(err)
-    return user
-  })
-}
+const api = express.Router()
+const Movie = mongoose.model('Movie')
+const User = mongoose.model('User')
 
 api.get('/', authRequired, async (req, res) => {
-  let user = await getCurrentUserUser(req, req)
+  let user = await User.load(req.user.id)
   res.json(user.library)
 })
 
 api.post('/', authRequired, async (req, res) => {
-  let user = await getCurrentUserUser(req, req)
-  user.library.add(req.body.id)
-  user.save((err) => {
-    if (err) res.send(err)
-    res.json({ message: 'Movie added to Library' })
-  })
+  let user = await User.load(req.user.id)
+  const movie = await Movie.load(req.body.movie_id)
+  const result = await user.libraryAdd(movie)
+  res.json(result)
 })
 
-api.delete('/:id', authRequired, async (req, res) => {
-  let user = await getCurrentUserUser(req, req)
-  user.library.remove(req.params.id)
-  user.save((err) => {
-    if (err) res.send(err)
-    res.json({ message: 'Movie removed from Library' })
-  })
+api.delete('/:movie_id', authRequired, async (req, res) => {
+  let user = await User.load(req.user.id)
+  const movie = await Movie.load(req.body.movie_id)
+  const result = await user.libraryAdd(movie)
+  res.json(result)
 })
 
 export default api

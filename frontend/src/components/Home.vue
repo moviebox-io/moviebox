@@ -12,12 +12,12 @@
       </div>
       <div class="column">
         <div class="columns is-multiline">
-          <div class="column is-11 is-offset-1" v-for="movie in movies" :item="movie" :key="movie.id">
+          <div class="column is-12" v-for="movie in movies" :item="movie" :key="movie.id">
             <div class="card">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
-                    <figure class="image is-64x64">
+                    <figure class="image">
                       <img v-if="movie.poster_path" :src="movie.poster_path" alt="Image">
                       <span v-else class="icon is-large"><i class="fa fa-film" aria-hidden="true"></i></span>
                     </figure>
@@ -25,15 +25,15 @@
                   <div class="media-content">
                     <p class="title is-4">{{ movie.title }}</p>
                     <p class="subtitle is-6"><small><i class="fa fa-star" aria-hidden="true"></i>{{ movie.vote_average }}</small></p>
-                  </div>
-                </div>
 
-                <div class="content">
-                  {{ movie.overview }}
+                    <div class="content">
+                      {{ movie.overview }}
+                    </div>
+                  </div>
                 </div>
               </div>
               <footer class="card-footer">
-                <a class="card-footer-item">Save</a>
+                <a class="card-footer-item" @click="save(movie.id)">Save</a>
               </footer>
             </div>
           </div>
@@ -65,19 +65,26 @@ export default {
   },
   watch: {
     '$route': 'search',
-    loggedIn: function (newLoggedIn) {
-      console.log(loggedIn)
+    loggedIn: function (isLoggedIn) {
+      console.log(`isLoggedIn: ${isLoggedIn}`)
     }
   },
   methods: {
     search () {
       this.loading = true
       this.query = this.$route.params.query
-      return api.searchMovie({query: this.query}).then((data = {}) => {
-        if (data.results) {
-          this.movies = data.results
-        }
-      }).then(() => { this.loading = false })
+      if (this.query) {
+        return api.searchMovie({query: this.query}).then((data = {}) => {
+          if (data.results) {
+            this.movies = data.results
+          }
+        }).then(() => { this.loading = false })
+      }
+    },
+    save (id) {
+      return api.saveMovie({id}).then((data = {}) => {
+        console.log(data)
+      })
     }
   }
 }
@@ -94,5 +101,9 @@ export default {
 
 .side-menu {
   width: 200px;
+}
+
+figure.image {
+  width: 128px;
 }
 </style>

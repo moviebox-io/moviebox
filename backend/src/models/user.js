@@ -17,6 +17,31 @@ if (process.env.NODE_ENV === 'development') {
   delete mongoose.modelSchemas.User
 }
 
+UserSchema.methods = {
+  ...UserSchema.methods,
+  async libraryAdd (movie) {
+    this.library.addToSet(movie)
+    return this.save((err) => {
+      if (err) throw err
+      return { message: 'Movie added to Library' }
+    })
+  },
+  async libraryRemove (movie) {
+    this.library.remove(movie)
+    return this.save((err) => {
+      if (err) throw err
+      return { message: 'Movie added to Library' }
+    })
+  }
+}
+
+UserSchema.statics = {
+  ...UserSchema.statics,
+  async load (id) {
+    return this.findById(id)
+  }
+}
+
 const User = mongoose.model('User', UserSchema)
 
 export default User

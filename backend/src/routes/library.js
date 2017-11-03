@@ -15,14 +15,14 @@ api.post('/', authRequired, async (req, res) => {
   let user = await User.load(req.user.id)
   const movie = await Movie.load(req.body.movie_id)
   const result = await user.libraryAdd(movie)
-  res.json(result)
+  res.json(result.library)
 })
 
 api.delete('/:movie_id', authRequired, async (req, res) => {
   let user = await User.load(req.user.id)
   const movie = await Movie.load(req.params.movie_id)
   const result = await user.libraryRemove(movie)
-  res.json(result)
+  res.json(result.library)
 })
 
 export default api

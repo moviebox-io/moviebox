@@ -81,15 +81,11 @@ export default {
     },
     saveMovie (id) {
       this.loading = true
-      return api.saveMovie({id}).then((data = {}) => {
-        // commit('SAVE MOVIE')
-      }).then(() => { this.loading = false })
+      return this.$store.dispatch('saveMovie', { id }).then(() => { this.loading = false })
     },
     deleteMovie (id) {
       this.loading = true
-      return api.deleteMovie({id}).then((data = {}) => {
-        // commit('DELETE MOVIE')
-      }).then(() => { this.loading = false })
+      return this.$store.dispatch('deleteMovie', { id }).then(() => { this.loading = false })
     }
   }
 }

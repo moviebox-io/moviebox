@@ -6,8 +6,7 @@ const state = {
   token: null,
   email: null,
   name: null,
-  imageUrl: null,
-  library: []
+  imageUrl: null
 }
 
 // getters
@@ -16,8 +15,7 @@ const getters = {
   getToken: state => state.token,
   getEmail: state => state.email,
   getName: state => state.name,
-  getImageUrl: state => state.imageUrl,
-  getLibrary: state => state.library
+  getImageUrl: state => state.imageUrl
 }
 
 // actions
@@ -27,6 +25,7 @@ const actions = {
       return Promise.resolve(state)
     } else {
       return api.userLogin({token: googleUser.getAuthResponse().id_token}).then((data) => {
+        commit(types.LIBRARY_UPDATE, { library: data.user.library })
         commit(types.LOGIN, { user: data.user, googleUser })
       })
     }
@@ -43,7 +42,6 @@ const mutations = {
     state.name = googleUser.getBasicProfile().getName()
     state.imageUrl = googleUser.getBasicProfile().getImageUrl()
     state.email = googleUser.getBasicProfile().getEmail()
-    state.library = user.library
   },
 
   [types.LOGOUT] (state) {
@@ -51,7 +49,6 @@ const mutations = {
     state.name = null
     state.imageUrl = null
     state.email = null
-    state.library = null
   }
 }
 

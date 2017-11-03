@@ -30,7 +30,7 @@ UserSchema.methods = {
     this.library.remove(movie)
     return this.save((err) => {
       if (err) throw err
-      return { message: 'Movie added to Library' }
+      return { message: 'Movie removed from Library' }
     })
   }
 }

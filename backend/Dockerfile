@@ -1,4 +1,4 @@
-FROM node:slim
+FROM node:8-slim
 LABEL maintainer="daviddcp@gmail.com"
 
 # Slim start up

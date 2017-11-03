@@ -6,7 +6,8 @@ const state = {
   token: null,
   email: null,
   name: null,
-  imageUrl: null
+  imageUrl: null,
+  library: []
 }
 
 // getters
@@ -15,7 +16,8 @@ const getters = {
   getToken: state => state.token,
   getEmail: state => state.email,
   getName: state => state.name,
-  getImageUrl: state => state.imageUrl
+  getImageUrl: state => state.imageUrl,
+  getLibrary: state => state.library
 }
 
 // actions
@@ -24,8 +26,8 @@ const actions = {
     if (state.googleUser) {
       return Promise.resolve(state)
     } else {
-      return api.userLogin({token: googleUser.getAuthResponse().id_token}).then(() => {
-        commit(types.LOGIN, { googleUser })
+      return api.userLogin({token: googleUser.getAuthResponse().id_token}).then((data) => {
+        commit(types.LOGIN, { user: data.user, googleUser })
       })
     }
   },
@@ -36,11 +38,12 @@ const actions = {
 
 // mutations
 const mutations = {
-  [types.LOGIN] (state, { googleUser }) {
+  [types.LOGIN] (state, { user, googleUser }) {
     state.token = googleUser.getAuthResponse().id_token
     state.name = googleUser.getBasicProfile().getName()
     state.imageUrl = googleUser.getBasicProfile().getImageUrl()
     state.email = googleUser.getBasicProfile().getEmail()
+    state.library = user.library
   },
 
   [types.LOGOUT] (state) {
@@ -48,6 +51,7 @@ const mutations = {
     state.name = null
     state.imageUrl = null
     state.email = null
+    state.library = null
   }
 }
 

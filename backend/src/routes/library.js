@@ -20,8 +20,8 @@ api.post('/', authRequired, async (req, res) => {
 
 api.delete('/:movie_id', authRequired, async (req, res) => {
   let user = await User.load(req.user.id)
-  const movie = await Movie.load(req.body.movie_id)
-  const result = await user.libraryAdd(movie)
+  const movie = await Movie.load(req.params.movie_id)
+  const result = await user.libraryRemove(movie)
   res.json(result)
 })
 

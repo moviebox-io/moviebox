@@ -33,7 +33,8 @@
                 </div>
               </div>
               <footer class="card-footer">
-                <a class="card-footer-item" @click="save(movie.id)">Save</a>
+                <a class="card-footer-item" @click="deleteMovie(movie.id)" v-if="library.includes(movie._id)">Delete</a>
+                <a class="card-footer-item" @click="saveMovie(movie.id)" v-else>Save</a>
               </footer>
             </div>
           </div>
@@ -57,17 +58,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      loggedIn: 'loggedIn'
+      library: 'getLibrary'
     })
   },
   created () {
     this.search()
   },
   watch: {
-    '$route': 'search',
-    loggedIn: function (isLoggedIn) {
-      console.log(`isLoggedIn: ${isLoggedIn}`)
-    }
+    '$route': 'search'
   },
   methods: {
     search () {
@@ -81,10 +79,17 @@ export default {
         }).then(() => { this.loading = false })
       }
     },
-    save (id) {
+    saveMovie (id) {
+      this.loading = true
       return api.saveMovie({id}).then((data = {}) => {
-        console.log(data)
-      })
+        // commit('SAVE MOVIE')
+      }).then(() => { this.loading = false })
+    },
+    deleteMovie (id) {
+      this.loading = true
+      return api.deleteMovie({id}).then((data = {}) => {
+        // commit('DELETE MOVIE')
+      }).then(() => { this.loading = false })
     }
   }
 }

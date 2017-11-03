@@ -13,7 +13,7 @@ export default {
       return this.sendRequest({
         method: 'post',
         url: this.urls.authGoogle(),
-        body: {id_token: token}
+        body: { id_token: token }
       })
     } else {
       return Promise.reject(new Error('Missing token'))
@@ -36,16 +36,31 @@ export default {
       return this.sendRequest({
         method: 'post',
         url: this.urls.library(),
-        body: {movie_id: id}
+        body: { movie_id: id }
       })
     } else {
       return Promise.reject(new Error('Missing id'))
     }
   },
 
-  sendRequest ({method, url, body}) {
+  deleteMovie ({id} = {}) {
+    if (id) {
+      return this.sendRequest({
+        method: 'delete',
+        url: `${this.urls.library()}/${id}`
+      })
+    } else {
+      return Promise.reject(new Error('Missing id'))
+    }
+  },
+
+  sendRequest ({method, url, body, options}) {
     if (method && url) {
-      return Vue.http[method](url, body).then(response => response.json())
+      if (body) {
+        return Vue.http[method](url, body, options).then(response => response.json())
+      } else {
+        return Vue.http[method](url, options).then(response => response.json())
+      }
     } else {
       return Promise.reject(new Error('Missing parameters'))
     }

@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - docker info
+    - if [[ -e ~/docker/backend.tar ]]; then docker load --input ~/docker/backend.tar; fi
+    - cd backend/ && docker build --rm=false -t moviebox-io/backend .
+    - mkdir -p ~/docker; docker save moviebox-io/backend > ~/docker/backend.tar
+    - if [[ -e ~/docker/frontend.tar ]]; then docker load --input ~/docker/frontend.tar; fi
+    - cd frontend/ && docker build --rm=false -t moviebox-io/frontend .
+    - mkdir -p ~/docker; docker save moviebox-io/frontend > ~/docker/frontend.tar
+
+test:
+  override:
+    - docker run -d -t moviebox-io/backend yarn test
+    - docker run -d -t moviebox-io/frontend yarn test

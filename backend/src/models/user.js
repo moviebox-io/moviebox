@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.index({google_id: 1}, {unique: true})
-UserSchema.index({library: 1})
 UserSchema.plugin(findOrCreate)
 
 // hot reload mongoose schema
